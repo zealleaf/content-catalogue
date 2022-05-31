@@ -1,0 +1,32 @@
+{
+  "name": "leafvein-catalogue",
+  "version": "1.0.0",
+  "description": "a component about catalogue",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.umd.js",
+  "module": "lib/index.es.js",
+  "scripts": {
+    "build": "tsc && vite build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zealleaf/leafvein-catalogue.git"
+  },
+  "keywords": [
+    "component",
+    "catalogue"
+  ],
+  "author": "zealleaf",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zealleaf/leafvein-catalogue/issues"
+  },
+  "homepage": "https://github.com/zealleaf/leafvein-catalogue#readme",
+  "devDependencies": {
+    "typescript": "^4.7.2",
+    "vite": "^2.9.9",
+    "vite-plugin-dts": "^1.2.0"
+  }
+}
