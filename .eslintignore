@@ -3,3 +3,5 @@ node_modules
 package.json
 tsconfig.json
 vite.config.js
+lib
+scripts
