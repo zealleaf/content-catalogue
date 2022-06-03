@@ -14,7 +14,7 @@
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm exec lint-staged --concurrent false",
-    "commit-msg": "node scripts/commitMsg.mjs $1"
+    "commit-msg": "pnpm exec esno scripts/commitMsg.ts $1"
   },
   "lint-staged": {
     "*": [
@@ -39,6 +39,7 @@
   },
   "homepage": "https://github.com/zealleaf/leafvein-catalogue#readme",
   "devDependencies": {
+    "@types/node": "^17.0.39",
     "@typescript-eslint/eslint-plugin": "^5.27.0",
     "@typescript-eslint/parser": "^5.27.0",
     "eslint": "^8.16.0",
@@ -48,6 +49,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.30.0",
     "eslint-plugin-react-hooks": "^4.5.0",
+    "esno": "^0.16.3",
     "lint-staged": "^13.0.0",
     "picocolors": "^1.0.0",
     "prettier": "^2.6.2",
