@@ -1,4 +1,3 @@
-// @ts-check
 // code from vite
 
 import { readFileSync } from 'fs'
