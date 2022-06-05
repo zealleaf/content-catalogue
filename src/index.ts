@@ -1,5 +1,1 @@
-function main(a: string) {
-  console.log('hello world!', a)
-}
-
-main('!')
+export { default as LeafveinCatalogue } from './Catalogue'

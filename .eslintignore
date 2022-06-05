@@ -4,3 +4,4 @@ node_modules
 package.json
 tsconfig.json
 vite.config.js
+index.html
