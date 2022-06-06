@@ -9,9 +9,9 @@
   "main": "lib/index.umd.js",
   "module": "lib/index.es.js",
   "scripts": {
-    "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx --quiet ./",
     "test": "vitest",
     "coverage": "vitest run --coverage",
+    "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx --quiet ./",
     "push": "pnpm exec esno scripts/push.ts"
   },
   "simple-git-hooks": {
