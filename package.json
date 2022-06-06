@@ -2,12 +2,7 @@
   "name": "leafvein-catalogue-monorepo",
   "version": "1.0.0",
   "private": false,
-  "description": "a component about catalogue",
-  "files": [
-    "lib"
-  ],
-  "main": "lib/index.umd.js",
-  "module": "lib/index.es.js",
+  "description": "leafvein-catalogue-monorepo",
   "scripts": {
     "test": "vitest",
     "coverage": "vitest run --coverage",
@@ -32,7 +27,8 @@
   },
   "keywords": [
     "component",
-    "catalogue"
+    "catalogue",
+    "monorepo"
   ],
   "author": "zealleaf",
   "license": "MIT",
