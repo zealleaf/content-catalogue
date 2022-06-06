@@ -1,0 +1,15 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1,
+    "workspacePrefix": "/Users/yezhiling/y/leafvein-catalogue"
+  },
+  "1 error pnpm": {
+    "code": "ERR_PNPM_MISSING_PACKAGE_NAME",
+    "err": {
+      "name": "pnpm",
+      "message": "`pnpm add` requires the package name",
+      "code": "ERR_PNPM_MISSING_PACKAGE_NAME",
+      "stack": "pnpm: `pnpm add` requires the package name\n    at Object.handler [as add] (/Users/yezhiling/.nvm/versions/node/v16.15.0/lib/node_modules/pnpm/dist/pnpm.cjs:121869:15)\n    at /Users/yezhiling/.nvm/versions/node/v16.15.0/lib/node_modules/pnpm/dist/pnpm.cjs:182685:51\n    at async run (/Users/yezhiling/.nvm/versions/node/v16.15.0/lib/node_modules/pnpm/dist/pnpm.cjs:182661:34)\n    at async runPnpm (/Users/yezhiling/.nvm/versions/node/v16.15.0/lib/node_modules/pnpm/dist/pnpm.cjs:182879:5)\n    at async /Users/yezhiling/.nvm/versions/node/v16.15.0/lib/node_modules/pnpm/dist/pnpm.cjs:182871:7"
+    }
+  }
+}

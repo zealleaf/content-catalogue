@@ -3,7 +3,7 @@ import { css } from '@emotion/react'
 
 const style = css`
   font-size: 160px;
-  background-color: #3294d6;
+  background-color: #d533b8;
   text-align: center;
   cursor: pointer;
   &:hover {

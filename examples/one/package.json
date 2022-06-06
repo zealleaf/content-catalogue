@@ -1,5 +1,5 @@
 {
-  "name": "playground",
+  "name": "@examples/one",
   "private": true,
   "version": "0.0.0",
   "scripts": {
@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.9.0",
+    "leafvein-catalogue": "workspace:^1.0.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },

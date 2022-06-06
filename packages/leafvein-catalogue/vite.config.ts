@@ -1,9 +1,7 @@
-/// <reference types="vitest" />
 import path from 'path'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 import react from '@vitejs/plugin-react'
-import autoImport from 'unplugin-auto-import/vite'
 
 module.exports = defineConfig({
   build: {
@@ -23,20 +21,14 @@ module.exports = defineConfig({
     outDir: path.resolve(__dirname, 'lib')
   },
   plugins: [
-    dts(),
+    dts({
+      outputDir: './types'
+    }),
     react({
       babel: {
         plugins: ['@emotion/babel-plugin']
       },
       jsxImportSource: '@emotion/react'
-    }),
-    autoImport({
-      imports: ['react', 'react-router-dom'],
-      dts: './src/auto-imports.d.ts'
     })
-  ],
-  test: {
-    globals: true,
-    environment: 'happy-dom'
-  }
+  ]
 })
