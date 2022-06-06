@@ -1,7 +1,6 @@
-lib
 node_modules
 .eslintrc.js
 package.json
 tsconfig.json
-vite.config.js
 index.html
+lib
