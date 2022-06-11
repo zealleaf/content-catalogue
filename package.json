@@ -10,8 +10,8 @@
     "push": "pnpm exec esno scripts/push.ts"
   },
   "simple-git-hooks": {
-    "commit-msg": "pnpm exec esno scripts/commitMsg.ts $1",
-    "pre-commit": "pnpm exec lint-staged --concurrent false"
+    "pre-commit": "pnpm exec lint-staged --concurrent false",
+    "commit-msg": "pnpm exec esno scripts/commitMsg.ts $1"
   },
   "lint-staged": {
     "*": [
