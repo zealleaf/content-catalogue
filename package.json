@@ -46,8 +46,8 @@
     "vitest": "^0.13.1"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm exec lint-staged --concurrent false",
-    "commit-msg": "pnpm exec esno scripts/commitMsg.ts $1"
+    "pre-commit": "lint-staged --concurrent false",
+    "commit-msg": "esno scripts/commitMsg.ts $1"
   },
   "lint-staged": {
     "*": [
