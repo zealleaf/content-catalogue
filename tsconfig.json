@@ -17,16 +17,16 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["node", "vite/client"],
+    "types": ["node", "vite/client", "vitest"],
     "paths": {
       "leafvein-catalogue": ["./packages/catalogue/src/index.ts"]
-    },
-    "exclude": [
-      "**/playground/**",
-      "**/node_modules/**",
-      "**/lib/**",
-      "**/dist/**",
-      "*.d.ts"
-    ]
-  }
+    }
+  },
+  "exclude": [
+    "**/playground/**",
+    "**/node_modules/**",
+    "**/lib/**",
+    "**/dist/**",
+    "*.d.ts"
+  ]
 }
