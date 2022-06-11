@@ -4,4 +4,5 @@ package.json
 tsconfig.json
 index.html
 lib
+dist
 *.d.ts

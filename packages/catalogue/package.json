@@ -10,8 +10,8 @@
   "types": "types/index.d.ts",
   "exports": {
     ".": {
-      "import": "./lib/index.es.js",
       "require": "./lib/index.umd.js",
+      "import": "./src/index.ts",
       "types": "./types/index.d.ts"
     }
   },
