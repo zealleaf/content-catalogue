@@ -1,23 +1,15 @@
 {
   "name": "leafvein-catalogue-monorepo",
-  "version": "1.0.0",
-  "private": false,
   "description": "leafvein-catalogue-monorepo",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/zealleaf/leafvein-catalogue.git"
-  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": false,
+  "author": "zealleaf",
   "keywords": [
     "component",
     "catalogue",
     "monorepo"
   ],
-  "author": "zealleaf",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/zealleaf/leafvein-catalogue/issues"
-  },
-  "homepage": "https://github.com/zealleaf/leafvein-catalogue#readme",
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@emotion/babel-plugin": "^11.9.2",
@@ -44,6 +36,14 @@
     "simple-git-hooks": "^2.8.0",
     "vite": "^2.9.9",
     "vitest": "^0.13.1"
+  },
+  "homepage": "https://github.com/zealleaf/leafvein-catalogue#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zealleaf/leafvein-catalogue.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zealleaf/leafvein-catalogue/issues"
   },
   "simple-git-hooks": {
     "pre-commit": "lint-staged --concurrent false",
