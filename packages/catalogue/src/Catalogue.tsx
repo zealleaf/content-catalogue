@@ -3,11 +3,11 @@ import { css } from '@emotion/react'
 
 const style = css`
   font-size: 160px;
-  background-color: #3371d5;
+  background-color: #6f95d2;
   text-align: center;
   cursor: pointer;
   &:hover {
-    color: #24ae1c;
+    color: #38bf38;
   }
 `
 

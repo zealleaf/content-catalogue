@@ -1187,6 +1187,7 @@ reactJsxRuntime_production_min.jsxs = q;
   jsxRuntime.exports = reactJsxRuntime_production_min;
 }
 const jsx$1 = jsxRuntime.exports.jsx;
+const jsxs$1 = jsxRuntime.exports.jsxs;
 const Fragment$1 = jsxRuntime.exports.Fragment;
 var Fragment = Fragment$1;
 function jsx(type, props, key) {
@@ -1195,16 +1196,22 @@ function jsx(type, props, key) {
   }
   return jsx$1(Emotion, createEmotionProps(type, props), key);
 }
+function jsxs(type, props, key) {
+  if (!hasOwnProperty.call(props, "css")) {
+    return jsxs$1(type, props, key);
+  }
+  return jsxs$1(Emotion, createEmotionProps(type, props), key);
+}
 const style = {
-  name: "vk35lu",
-  styles: "font-size:160px;background-color:#3371d5;text-align:center;cursor:pointer;&:hover{color:#24ae1c;}"
+  name: "1qx7a50",
+  styles: "font-size:160px;background-color:#6f95d2;text-align:center;cursor:pointer;&:hover{color:#38bf38;}"
 };
 const Catalogue = (props) => {
-  return /* @__PURE__ */ jsx(Fragment, {
-    children: /* @__PURE__ */ jsx("div", {
+  return /* @__PURE__ */ jsxs(Fragment, {
+    children: ["123123123", /* @__PURE__ */ jsx("div", {
       css: style,
       children: props.children
-    })
+    })]
   });
 };
 export { Catalogue as LeafveinCatalogue };
