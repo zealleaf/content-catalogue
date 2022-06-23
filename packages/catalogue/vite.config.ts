@@ -4,6 +4,11 @@ import dts from 'vite-plugin-dts'
 import react from '@vitejs/plugin-react'
 
 module.exports = defineConfig({
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src')
+    }
+  },
   build: {
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
