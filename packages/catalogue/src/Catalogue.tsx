@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import scanner from './core/scanner'
+import scroller from './core/scroller'
 import useHashListener from './core/useHashListener'
 
 /* ===type=== */
@@ -21,12 +22,15 @@ interface catalogueItemData {
 const baseWrapSV = `
   width: 200px;
   font-size: 16px;
- 
   text-align: start;
+  position: fixed;
+  top: 20px;
+  right: 20px;
 `
 const baseItemSV = `
   cursor: pointer;
   border-left: solid 2px #eef1ea;
+  transition: all 0.2s;
   &:hover {
     color: red
   }
@@ -35,18 +39,32 @@ const baseItemSV = `
 // tip
 css`
   border-left: solid 2px green;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  transition: all 1s;
 `
 
 const Catalogue: React.FC<propsData> = (props) => {
+  const firstRenderHashRef = useRef<string>('')
   const [catalogueItemList, setCatalogueItemList] = useState<
     catalogueItemData[]
   >([])
   const currentHash = useHashListener()
 
+  useLayoutEffect(() => {
+    window.clickHadLetHashChange = true
+    firstRenderHashRef.current = location.hash
+    location.hash = ''
+  }, [])
+
   useEffect(() => {
     const scanResult = scanner(props.contentMark)
-    setCatalogueItemList(scanResult)
+    scroller(scanResult.scannedDoms)
+    setCatalogueItemList(scanResult.result)
+    location.hash = firstRenderHashRef.current
   }, [])
+
   return (
     <>
       {catalogueItemList.length ? (
@@ -62,11 +80,23 @@ const Catalogue: React.FC<propsData> = (props) => {
                   },
                   {
                     borderLeftColor:
-                      currentHash === catalogueItem.hash ? 'green' : '#eef1ea'
+                      decodeURIComponent(currentHash || location.hash) ===
+                      catalogueItem.hash
+                        ? '#0eda29'
+                        : '#eef1ea'
                   },
                   props.diyItem
                 )}
-                onClick={() => (location.hash = catalogueItem.hash)}
+                onClick={() => {
+                  if (
+                    decodeURIComponent(location.hash) === catalogueItem.hash
+                  ) {
+                    window.clickHadLetHashChange = false
+                  } else {
+                    window.clickHadLetHashChange = true
+                  }
+                  location.hash = catalogueItem.hash
+                }}
               >
                 {catalogueItem.text}
               </div>

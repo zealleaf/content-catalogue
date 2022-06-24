@@ -6,6 +6,9 @@ function useHashListener() {
   useEffect(() => {
     window.addEventListener('hashchange', () => {
       setCurrentHash(location.hash)
+      setTimeout(() => {
+        window.clickHadLetHashChange = false
+      }, 200)
     })
   }, [])
 
