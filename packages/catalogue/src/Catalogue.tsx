@@ -52,12 +52,20 @@ const Catalogue: React.FC<propsData> = (props) => {
   const [currentAnchor, setCurrentAnchor] = useState<string>('')
   const scanResultRef = useRef<scannerReturn>()
 
+  const clickFN = ([anchor]: string[]) => {
+    window.clickHadLetScrollTopChange = true
+    setCurrentAnchor(anchor)
+    location.hash = anchor
+    clickingTheCatalogueItemCausesThePageToScroll(anchor, scanResultRef.current?.scannedDoms)
+  }
+
   useEffect(() => {
     const scanResult = scanner(props.contentMark)
     scroller(scanResult.scannedDoms, setCurrentAnchor)
     setCatalogueItemList(scanResult.result)
     scanResultRef.current = scanResult
     document.documentElement.style.scrollBehavior = props.scrollBehavior || 'smooth'
+    clickFN([decodeURIComponent(location.hash)])
   }, [])
 
   return (
@@ -79,15 +87,7 @@ const Catalogue: React.FC<propsData> = (props) => {
                   },
                   props.diyItem
                 )}
-                onClick={debounce(() => {
-                  window.clickHadLetScrollTopChange = true
-                  setCurrentAnchor(catalogueItem.anchor)
-                  location.hash = catalogueItem.anchor
-                  clickingTheCatalogueItemCausesThePageToScroll(
-                    catalogueItem.anchor,
-                    scanResultRef.current?.scannedDoms
-                  )
-                }, 100)}
+                onClick={() => debounce(clickFN, 100)(catalogueItem.anchor)}
               >
                 {catalogueItem.text}
               </div>
