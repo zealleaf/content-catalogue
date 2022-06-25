@@ -1,8 +1,18 @@
+export interface scannerReturn {
+  result: {
+    anchor: string
+    paddingLeft: number
+    tagType: string
+    text: string
+  }[]
+  scannedDoms: Element[] | undefined
+}
+
 const tags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
 
 // scanner
 // Scan page content for directory data
-function scanner(contentMark: string) {
+function scanner(contentMark: string): scannerReturn {
   let result = []
 
   // step1
@@ -15,9 +25,7 @@ function scanner(contentMark: string) {
   }
 
   // step2
-  const selectedDomList$2 = [
-    ...document.querySelectorAll("[data-selected='true']")
-  ]
+  const selectedDomList$2 = [...document.querySelectorAll("[data-selected='true']")]
 
   // step3
   const map = new Map()
@@ -34,19 +42,19 @@ function scanner(contentMark: string) {
   // step4
   result = selectedDomList$2.map((selectedDom, index) => {
     if (letHashPayloadIndex) {
-      selectedDom.id = selectedDom.innerHTML + '-' + index
+      selectedDom.setAttribute('data-anchor', '#' + selectedDom.innerHTML + '-' + (index + 1))
     } else {
-      selectedDom.id = selectedDom.innerHTML
+      selectedDom.setAttribute('data-anchor', '#' + selectedDom.innerHTML + '-' + (index + 1))
     }
     return {
-      hash: '#' + selectedDom.id,
+      anchor: selectedDom.getAttribute('data-anchor') || '',
       paddingLeft: Number(selectedDom.tagName.replace('H', '')),
       tagType: selectedDom.tagName,
       text: selectedDom.innerHTML
     }
   })
 
-  return { result, scannedDoms: selectedDomList$2 } || []
+  return { result, scannedDoms: selectedDomList$2 }
 }
 
 export default scanner

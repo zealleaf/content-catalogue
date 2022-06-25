@@ -11,7 +11,7 @@
   "exports": {
     ".": {
       "require": "./lib/index.umd.js",
-      "import": "./src/index.ts",
+      "import": "./lib/index.es.js",
       "types": "./types/index.d.ts"
     }
   },

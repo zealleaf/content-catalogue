@@ -1,1 +1,1 @@
-export { default as LeafveinCatalogue } from './Catalogue'
+export { default as LeafveinCatalogue } from '@/Catalogue'

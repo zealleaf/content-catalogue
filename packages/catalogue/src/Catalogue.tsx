@@ -1,22 +1,24 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import scanner from './core/scanner'
-import scroller from './core/scroller'
-import useHashListener from './core/useHashListener'
+import { useEffect, useRef, useState } from 'react'
+import clickingTheCatalogueItemCausesThePageToScroll from '@/core/clickingTheCatalogueItemCausesThePageToScroll'
+import scanner, { scannerReturn } from '@/core/scanner'
+import scroller from '@/core/scroller'
+import { debounce } from '@/utils/debounce'
 
 /* ===type=== */
 interface propsData {
   contentMark: string
-  diyWrap: string
-  diyItem: string
+  scrollBehavior?: 'smooth' | 'none'
+  diyWrap?: string
+  diyItem?: string
 }
 
 interface catalogueItemData {
   tagType: string
   text: string
   paddingLeft: number
-  hash: string
+  anchor: string
 }
 /* ===styleValue=== */
 const baseWrapSV = `
@@ -46,57 +48,46 @@ css`
 `
 
 const Catalogue: React.FC<propsData> = (props) => {
-  const firstRenderHashRef = useRef<string>('')
-  const [catalogueItemList, setCatalogueItemList] = useState<
-    catalogueItemData[]
-  >([])
-  const currentHash = useHashListener()
-
-  useLayoutEffect(() => {
-    window.clickHadLetHashChange = true
-    firstRenderHashRef.current = location.hash
-    location.hash = ''
-  }, [])
+  const [catalogueItemList, setCatalogueItemList] = useState<catalogueItemData[]>([])
+  const [currentAnchor, setCurrentAnchor] = useState<string>('')
+  const scanResultRef = useRef<scannerReturn>()
 
   useEffect(() => {
     const scanResult = scanner(props.contentMark)
-    scroller(scanResult.scannedDoms)
+    scroller(scanResult.scannedDoms, setCurrentAnchor)
     setCatalogueItemList(scanResult.result)
-    location.hash = firstRenderHashRef.current
+    scanResultRef.current = scanResult
+    document.documentElement.style.scrollBehavior = props.scrollBehavior || 'smooth'
   }, [])
 
   return (
     <>
       {catalogueItemList.length ? (
-        <div css={css(baseWrapSV, props.diyWrap)}>
+        <div css={css(baseWrapSV, props.diyWrap)} id="leafvein-catalogue-wrap">
           {catalogueItemList.map((catalogueItem) => {
             return (
               <div
-                key={catalogueItem.hash}
+                className="leafvein-catalogue-item"
+                key={catalogueItem.anchor}
                 css={css(
                   baseItemSV,
                   {
                     paddingLeft: 10 * catalogueItem.paddingLeft
                   },
                   {
-                    borderLeftColor:
-                      decodeURIComponent(currentHash || location.hash) ===
-                      catalogueItem.hash
-                        ? '#0eda29'
-                        : '#eef1ea'
+                    borderLeftColor: currentAnchor === catalogueItem.anchor ? '#0eda29' : '#eef1ea'
                   },
                   props.diyItem
                 )}
-                onClick={() => {
-                  if (
-                    decodeURIComponent(location.hash) === catalogueItem.hash
-                  ) {
-                    window.clickHadLetHashChange = false
-                  } else {
-                    window.clickHadLetHashChange = true
-                  }
-                  location.hash = catalogueItem.hash
-                }}
+                onClick={debounce(() => {
+                  window.clickHadLetScrollTopChange = true
+                  setCurrentAnchor(catalogueItem.anchor)
+                  location.hash = catalogueItem.anchor
+                  clickingTheCatalogueItemCausesThePageToScroll(
+                    catalogueItem.anchor,
+                    scanResultRef.current?.scannedDoms
+                  )
+                }, 100)}
               >
                 {catalogueItem.text}
               </div>

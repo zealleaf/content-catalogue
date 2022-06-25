@@ -17,5 +17,8 @@ module.exports = defineConfig({
     sourceType: 'module',
     ecmaVersion: 'latest'
   },
-  plugins: ['react', 'react-hooks', 'import', '@typescript-eslint', 'prettier']
+  plugins: ['react', 'react-hooks', 'import', '@typescript-eslint', 'prettier'],
+  rules: {
+    'prettier/prettier': ['warn', { printWidth: 100 }]
+  }
 })

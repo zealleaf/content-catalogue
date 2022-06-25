@@ -1,5 +1,5 @@
 import * as React from "react";
-import React__default, { createContext, forwardRef, useContext, createElement, Fragment as Fragment$2 } from "react";
+import React__default, { createContext, forwardRef, useContext, createElement, Fragment as Fragment$2, useState, useRef, useEffect } from "react";
 function sheetForTag(tag) {
   if (tag.sheet) {
     return tag.sheet;
@@ -1156,6 +1156,94 @@ var Emotion = /* @__PURE__ */ withEmotionCache(function(props, cache, ref) {
     isStringTag: typeof WrappedComponent === "string"
   }), /* @__PURE__ */ createElement(WrappedComponent, newProps));
 });
+function css() {
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+  return serializeStyles(args);
+}
+let exportedDomNeeded;
+function clickingTheCatalogueItemCausesThePageToScroll(currentAnchor, scannedDoms) {
+  var _a;
+  const domNeeded = scannedDoms == null ? void 0 : scannedDoms.find((dom) => dom.getAttribute("data-anchor") === currentAnchor);
+  const domNeededGBCRTop = ((_a = domNeeded == null ? void 0 : domNeeded.getBoundingClientRect()) == null ? void 0 : _a.top) || 0;
+  document.documentElement.scrollTop = document.documentElement.scrollTop + domNeededGBCRTop;
+  exportedDomNeeded = domNeeded;
+}
+const tags = ["h1", "h2", "h3", "h4", "h5", "h6"];
+function scanner(contentMark) {
+  let result = [];
+  for (const tag of tags) {
+    const selector = contentMark + " " + tag;
+    const selectedDomList$1 = [...document.querySelectorAll(selector)];
+    selectedDomList$1.forEach((dom) => {
+      dom.setAttribute("data-selected", "true");
+    });
+  }
+  const selectedDomList$2 = [...document.querySelectorAll("[data-selected='true']")];
+  const map = /* @__PURE__ */ new Map();
+  let letHashPayloadIndex = false;
+  selectedDomList$2.forEach((item) => {
+    if (map.has(item.innerHTML)) {
+      letHashPayloadIndex = true;
+      return;
+    } else {
+      map.set(item.innerHTML, 1);
+    }
+  });
+  result = selectedDomList$2.map((selectedDom, index) => {
+    if (letHashPayloadIndex) {
+      selectedDom.setAttribute("data-anchor", "#" + selectedDom.innerHTML + "-" + (index + 1));
+    } else {
+      selectedDom.setAttribute("data-anchor", "#" + selectedDom.innerHTML + "-" + (index + 1));
+    }
+    return {
+      anchor: selectedDom.getAttribute("data-anchor") || "",
+      paddingLeft: Number(selectedDom.tagName.replace("H", "")),
+      tagType: selectedDom.tagName,
+      text: selectedDom.innerHTML
+    };
+  });
+  return {
+    result,
+    scannedDoms: selectedDomList$2
+  };
+}
+const debounce = (fn, delay) => {
+  let timer;
+  return function(...args) {
+    const a = args;
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      fn(a);
+    }, delay);
+  };
+};
+function findWhichDomMarginTopCloser(params) {
+  const closerDom = params[0].sort((a, b2) => {
+    return Math.abs(a.getBoundingClientRect().top) - Math.abs(b2.getBoundingClientRect().top);
+  })[0];
+  const currentAnchor = closerDom.getAttribute("data-anchor") || "";
+  location.hash = currentAnchor;
+  params[1](currentAnchor);
+}
+const findWhichDomMarginTopCloserDebounced = debounce(findWhichDomMarginTopCloser, 200);
+const DE = document.documentElement;
+function scroller(scannedDoms, setCurrentAnchor) {
+  window.addEventListener("scroll", () => {
+    if (window.clickHadLetHashChange) {
+      const flag$1 = Math.abs((exportedDomNeeded == null ? void 0 : exportedDomNeeded.getBoundingClientRect().top) || 0) < 5;
+      const flag$2 = Math.abs(DE.scrollHeight - (DE.scrollTop + DE.clientHeight)) < 5;
+      if (flag$1 || flag$2) {
+        window.clickHadLetHashChange = false;
+      }
+      return;
+    }
+    findWhichDomMarginTopCloserDebounced(scannedDoms, setCurrentAnchor);
+  });
+}
 var jsxRuntime = { exports: {} };
 var reactJsxRuntime_production_min = {};
 /**
@@ -1195,16 +1283,56 @@ function jsx(type, props, key) {
   }
   return jsx$1(Emotion, createEmotionProps(type, props), key);
 }
-const style = {
-  name: "1qx7a50",
-  styles: "font-size:160px;background-color:#6f95d2;text-align:center;cursor:pointer;&:hover{color:#38bf38;}"
-};
+const baseWrapSV = `
+  width: 200px;
+  font-size: 16px;
+  text-align: start;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+`;
+const baseItemSV = `
+  cursor: pointer;
+  border-left: solid 2px #eef1ea;
+  transition: all 0.2s;
+  &:hover {
+    color: red
+  }
+`;
 const Catalogue = (props) => {
+  const [catalogueItemList, setCatalogueItemList] = useState([]);
+  const [currentAnchor, setCurrentAnchor] = useState("");
+  const scanResultRef = useRef();
+  useEffect(() => {
+    const scanResult = scanner(props.contentMark);
+    scroller(scanResult.scannedDoms, setCurrentAnchor);
+    setCatalogueItemList(scanResult.result);
+    scanResultRef.current = scanResult;
+    document.documentElement.style.scrollBehavior = props.scrollBehavior || "smooth";
+  }, []);
   return /* @__PURE__ */ jsx(Fragment, {
-    children: /* @__PURE__ */ jsx("div", {
-      css: style,
-      children: props.children
-    })
+    children: catalogueItemList.length ? /* @__PURE__ */ jsx("div", {
+      css: /* @__PURE__ */ css(baseWrapSV, props.diyWrap, "", ""),
+      id: "leafvein-catalogue-wrap",
+      children: catalogueItemList.map((catalogueItem) => {
+        return /* @__PURE__ */ jsx("div", {
+          className: "leafvein-catalogue-item",
+          css: /* @__PURE__ */ css(baseItemSV, {
+            paddingLeft: 10 * catalogueItem.paddingLeft
+          }, {
+            borderLeftColor: currentAnchor === catalogueItem.anchor ? "#0eda29" : "#eef1ea"
+          }, props.diyItem, "", ""),
+          onClick: debounce(() => {
+            var _a;
+            window.clickHadLetHashChange = true;
+            setCurrentAnchor(catalogueItem.anchor);
+            location.hash = catalogueItem.anchor;
+            clickingTheCatalogueItemCausesThePageToScroll(catalogueItem.anchor, (_a = scanResultRef.current) == null ? void 0 : _a.scannedDoms);
+          }, 100),
+          children: catalogueItem.text
+        }, catalogueItem.anchor);
+      })
+    }) : "loading"
   });
 };
 export { Catalogue as LeafveinCatalogue };

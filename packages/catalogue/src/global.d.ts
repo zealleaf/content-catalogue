@@ -1,3 +1,3 @@
 interface Window {
-  clickHadLetHashChange: boolean
+  clickHadLetScrollTopChange: boolean
 }
