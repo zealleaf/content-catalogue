@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { LeafveinCatalogue } from '../../packages/catalogue/src'
+import { LeafveinCatalogue } from 'leafvein-catalogue'
 
 const APP: React.FC = () => {
   return (
