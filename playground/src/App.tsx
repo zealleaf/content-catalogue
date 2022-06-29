@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { LeafveinCatalogue } from 'leafvein-catalogue'
+import { LeafveinCatalogue } from '../../packages/catalogue/src'
 
 const APP: React.FC = () => {
   return (
     <>
       <div className="doc">
-        <h1>1</h1>
-        <h2>2</h2>
+        <h1>你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好</h1>
+        <h2>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</h2>
         <h1>3</h1>
         <h1>4</h1>
         <h2>5</h2>

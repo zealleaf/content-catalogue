@@ -1,7 +1,7 @@
 {
   "name": "leafvein-catalogue",
   "description": "a component about catalogue",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "author": "zealleaf",
   "main": "lib/index.umd.js",

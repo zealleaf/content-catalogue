@@ -44,7 +44,7 @@ function scanner(contentMark: string): scannerReturn {
     if (letHashPayloadIndex) {
       selectedDom.setAttribute('data-anchor', '#' + selectedDom.innerHTML + '-' + (index + 1))
     } else {
-      selectedDom.setAttribute('data-anchor', '#' + selectedDom.innerHTML + '-' + (index + 1))
+      selectedDom.setAttribute('data-anchor', '#' + selectedDom.innerHTML)
     }
     return {
       anchor: selectedDom.getAttribute('data-anchor') || '',
