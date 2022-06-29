@@ -1,7 +1,7 @@
 {
   "name": "leafvein-catalogue",
   "description": "a component about catalogue",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "author": "zealleaf",
   "main": "lib/index.umd.js",
@@ -28,8 +28,10 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
   },
-  "devDependencies": {
-    "vite-plugin-dts": "^1.2.0"
+  "dependencies": {
+    "@emotion/react": "^11.9.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
   },
   "homepage": "https://github.com/zealleaf/leafvein-catalogue#readme",
   "repository": {
