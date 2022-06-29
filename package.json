@@ -62,6 +62,7 @@
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx --quiet ./",
-    "push": "esno scripts/push.ts"
+    "push": "esno scripts/push.ts",
+    "myPublish": "esno scripts/myPublish.ts"
   }
 }
