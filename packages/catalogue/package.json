@@ -3,7 +3,6 @@
   "description": "a component about catalogue",
   "version": "1.0.0",
   "license": "MIT",
-  "private": true,
   "author": "zealleaf",
   "main": "lib/index.umd.js",
   "module": "lib/index.es.js",
@@ -18,7 +17,6 @@
   "files": [
     "lib",
     "types",
-    "LICENSE",
     "README.md"
   ],
   "keywords": [
