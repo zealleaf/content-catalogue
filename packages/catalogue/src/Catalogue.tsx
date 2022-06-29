@@ -78,7 +78,7 @@ const Catalogue: React.FC<propsData> = (props) => {
         <div css={css(baseWrapSV, props.diyWrap)} id="leafvein-catalogue-wrap">
           {catalogueItemList.map((catalogueItem) => {
             return (
-              <a
+              <div
                 className="leafvein-catalogue-item"
                 key={catalogueItem.anchor}
                 css={css(
@@ -92,10 +92,10 @@ const Catalogue: React.FC<propsData> = (props) => {
                   props.diyItem
                 )}
                 onClick={() => debounce(clickFN, 100)(catalogueItem.anchor)}
-                title={catalogueItem?.text?.length > 10 ? catalogueItem?.text : ''}
+                title={catalogueItem?.text?.replace(/<[^>]+>/g, '') || ''}
               >
-                {catalogueItem?.text}
-              </a>
+                {catalogueItem?.text?.replace(/<[^>]+>/g, '') || ''}
+              </div>
             )
           })}
         </div>
