@@ -4,14 +4,17 @@ import { useEffect, useRef, useState } from 'react'
 import clickingTheCatalogueItemCausesThePageToScroll from '@/core/clickingTheCatalogueItemCausesThePageToScroll'
 import scanner, { scannerReturn } from '@/core/scanner'
 import scroller from '@/core/scroller'
+import moveHorizontally from '@/core/moveHorizontally'
 import { debounce } from '@/utils/debounce'
 
 /* ===type=== */
 interface propsData {
   contentMark: string
-  scrollBehavior?: 'smooth' | 'none'
+  scrollHash?: boolean
   diyWrap?: string
   diyItem?: string
+  scrollBehavior?: 'smooth' | 'none'
+  openMoveHorizontally?: boolean
 }
 
 interface catalogueItemData {
@@ -38,22 +41,13 @@ const baseItemSV = `
   white-space: nowrap;
   display: block;
   &:hover {
-    color: red
+    color: #0eda29
   }
 `
-/* ===style=== */
-// tip
-css`
-  border-left: solid 2px green;
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  transition: all 1s;
-`
-
 const Catalogue: React.FC<propsData> = (props) => {
   const [catalogueItemList, setCatalogueItemList] = useState<catalogueItemData[]>([])
   const [currentAnchor, setCurrentAnchor] = useState<string>('')
+  const [catalogueOpacity, setCatalogueOpacity] = useState<number>(0)
   const scanResultRef = useRef<scannerReturn>()
 
   const clickFN = ([anchor]: string[]) => {
@@ -63,19 +57,38 @@ const Catalogue: React.FC<propsData> = (props) => {
     clickingTheCatalogueItemCausesThePageToScroll(anchor, scanResultRef.current?.scannedDoms)
   }
 
+  // init
   useEffect(() => {
     const scanResult = scanner(props.contentMark)
-    scroller(scanResult.scannedDoms, setCurrentAnchor)
+    scroller(scanResult.scannedDoms, setCurrentAnchor, props.scrollHash)
     setCatalogueItemList(scanResult.result)
     scanResultRef.current = scanResult
     document.documentElement.style.scrollBehavior = props.scrollBehavior || 'smooth'
     clickFN([decodeURIComponent(location.hash)])
   }, [])
 
+  // effect move
+  useEffect(() => {
+    if (catalogueItemList.length && props.openMoveHorizontally) {
+      const initMoveFinished = moveHorizontally({
+        openMoveHorizontally: props.openMoveHorizontally || false,
+        contentMark: props.contentMark,
+        catalogueMark: '#leafvein-catalogue-wrap'
+      })
+
+      setCatalogueOpacity(initMoveFinished)
+    }
+  }, [catalogueItemList.length, props.openMoveHorizontally])
+
   return (
     <>
       {catalogueItemList.length ? (
-        <div css={css(baseWrapSV, props.diyWrap)} id="leafvein-catalogue-wrap">
+        <div
+          css={css(baseWrapSV, props.diyWrap, {
+            opacity: props.openMoveHorizontally ? catalogueOpacity : 1
+          })}
+          id="leafvein-catalogue-wrap"
+        >
           {catalogueItemList.map((catalogueItem) => {
             return (
               <div
@@ -100,7 +113,7 @@ const Catalogue: React.FC<propsData> = (props) => {
           })}
         </div>
       ) : (
-        'loading'
+        'loading...'
       )}
     </>
   )

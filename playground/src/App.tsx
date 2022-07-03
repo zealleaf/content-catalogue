@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react'
 import { LeafveinCatalogue } from '../../packages/catalogue/src'
 
 const APP: React.FC = () => {
@@ -41,7 +40,7 @@ const APP: React.FC = () => {
         <h2>29</h2>
         <h1>30</h1>
       </div>
-      <LeafveinCatalogue contentMark=".doc" />
+      <LeafveinCatalogue contentMark=".doc" scrollHash={true} />
     </>
   )
 }

@@ -2,14 +2,19 @@ import React from 'react'
 import { debounce } from '@/utils/debounce'
 import { exportedDomNeeded } from './clickingTheCatalogueItemCausesThePageToScroll'
 
+type scrollHash = boolean
+
 function findWhichDomMarginTopCloser(
-  params: [HTMLAnchorElement[], React.Dispatch<React.SetStateAction<string>>]
+  params: [HTMLAnchorElement[], React.Dispatch<React.SetStateAction<string>>, scrollHash]
 ) {
   const closerDom = params[0].sort((a, b) => {
     return Math.abs(a.getBoundingClientRect().top) - Math.abs(b.getBoundingClientRect().top)
   })[0]
   const currentAnchor = closerDom.getAttribute('data-anchor') || ''
-  location.hash = currentAnchor
+
+  if (params[2]) {
+    location.hash = currentAnchor
+  }
   params[1](currentAnchor)
 }
 
@@ -22,7 +27,8 @@ const DE = document.documentElement
 
 function scroller(
   scannedDoms: unknown,
-  setCurrentAnchor: React.Dispatch<React.SetStateAction<string>>
+  setCurrentAnchor: React.Dispatch<React.SetStateAction<string>>,
+  scrollHash?: boolean
 ) {
   window.addEventListener('scroll', () => {
     const flag$1 = Math.abs(exportedDomNeeded?.getBoundingClientRect().top || 0) < 1
@@ -36,7 +42,7 @@ function scroller(
     }
 
     if (!flag$2) {
-      findWhichDomMarginTopCloserDebounced(scannedDoms, setCurrentAnchor)
+      findWhichDomMarginTopCloserDebounced(scannedDoms, setCurrentAnchor, scrollHash)
     }
   })
 }
